@@ -12,6 +12,8 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Native extension}
   gem.homepage      = "http://www.example.com/"
 
+  gem.add_development_dependency "rspec", ">= 2.13.0"
+  gem.add_development_dependency "rake", ">= 1.9.1"
   gem.add_development_dependency "rake-compiler"
 
   gem.files         = `git ls-files`.split($/)
