@@ -2,5 +2,7 @@ require "foo/version"
 require "foo/foo"
 
 module Foo
-  # Your code goes here...
+  def self.ruby_test
+    42
+  end
 end

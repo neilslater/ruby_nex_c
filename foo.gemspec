@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "foo"
   gem.version       = Foo::VERSION
   gem.authors       = ["Neil Slater"]
-  gem.email         = ["slobo777@gmail.com"]
-  gem.description   = %q{Test of adding native extension to bundle gem}
-  gem.summary       = %q{Native extension}
-  gem.homepage      = "http://www.example.com/"
+  gem.email         = ["slobo.777@gmail.com"]
+  gem.description   = %q{Native extension starter gem combining Ruby and C}
+  gem.summary       = %q{Native extension in C}
+  gem.homepage      = "http://slobo777.deviantart.com/"
 
   gem.add_development_dependency "rspec", ">= 2.13.0"
   gem.add_development_dependency "rake", ">= 1.9.1"

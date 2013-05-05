@@ -1,6 +1,6 @@
 # Foo
 
-TODO: Write a gem description
+Example of gem that combines Ruby and C native extension.
 
 ## Installation
 
@@ -18,7 +18,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem is a do-nothing skeleton, built starting from
+
+    $ bundle gem foo
+
+and then continued by adding support for native extensions in C.
+
+Its purpose is to be a reference or starting point
+for other gems with both Ruby and C code.
 
 ## Contributing
 
