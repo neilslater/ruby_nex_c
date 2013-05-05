@@ -1,5 +1,7 @@
 # Foo
 
+[![Build Status](https://travis-ci.org/neilslater/ruby_nex_c.png?branch=master)](http://travis-ci.org/neilslater/ruby_nex_c)
+
 Example of gem that combines Ruby and C native extension.
 
 ## Installation
