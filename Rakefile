@@ -11,6 +11,7 @@ end
 gemspec = Gem::Specification.load('foo.gemspec')
 Rake::ExtensionTask.new do |ext|
   ext.name = 'foo'
+  ext.source_pattern = "*.{c,h}"
   ext.ext_dir = 'ext/foo'
   ext.lib_dir = 'lib/foo'
   ext.gem_spec = gemspec
