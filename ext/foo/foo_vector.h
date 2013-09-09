@@ -23,4 +23,9 @@ typedef struct _fv {
     double z;
   } FVStruct;
 
+FVStruct *create_fv_struct();
+void destroy_fv_struct( FVStruct *fv );
+FVStruct *copy_fv_struct( FVStruct *orig );
+double fv_magnitude( FVStruct *fv );
+
 #endif
