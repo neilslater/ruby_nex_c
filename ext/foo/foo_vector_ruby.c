@@ -1,51 +1,11 @@
-// ext/foo/foo_vector.c
+// ext/foo/foo_vector_ruby.c
 
-// An example of using a C struct as a Ruby object.
-// This is not a full implementation of 3D vector class, it's just the bare outline of one to use
-// as a template for any similar "C struct == Ruby class" projects.
+// This is the header for Ruby bindings that connect a "native" library to Ruby object-oriented
+// framework.
 
-#include "foo_vector.h"
+// This is just the bare outline of a library, and not supposed to be complete.
 
-/*
- * Routines to create and destroy structs. If a struct contains
- * a pointer, it should be initialised to NULL, and further routines used to build
- * the deeper structures. Importantly, Ruby needs to be able to build a valid struct
- * when passing no parameters to the library.
- *
-*/
-
-FVStruct *create_fv_struct() {
-  FVStruct *fv;
-  fv = malloc (sizeof(FVStruct));
-  if ( fv == NULL ) {
-    rb_raise( rb_eRuntimeError, "Could not allocate memory for Foo::Vector" );
-  }
-  fv->x = 0.0;
-  fv->y = 0.0;
-  fv->z = 0.0;
-  return fv;
-}
-
-void destroy_fv_struct( FVStruct *fv ) {
-  xfree( fv );
-  return;
-}
-
-// Note this isn't called from initialize_copy, it's for internal copies
-FVStruct *copy_fv_struct( FVStruct *orig ) {
-  FVStruct *fv = create_fv_struct();
-  memcpy( fv, orig, sizeof(FVStruct) );
-  return fv;
-}
-
-/*
- * "Native" routines that work with struct pointers
- *
-*/
-
-double fv_magnitude( FVStruct *fv ) {
-  return sqrt( fv->x * fv->x + fv->y * fv->y + fv->z * fv->z );
-}
+#include "foo_vector_ruby.h"
 
 /*
  * Generic Ruby integration
@@ -83,7 +43,7 @@ void assert_value_wraps_fv( VALUE obj ) {
  *
 */
 
-// C version of initialize
+// Native extensions version of initialize
 VALUE foo_vector_initialize( VALUE self, VALUE init_x, VALUE init_y, VALUE init_z ) {
   FVStruct *fv = get_fv_struct( self );
 
@@ -94,7 +54,7 @@ VALUE foo_vector_initialize( VALUE self, VALUE init_x, VALUE init_y, VALUE init_
   return self;
 }
 
-// Special initialize on copy
+// Special initialize to support "clone"
 VALUE foo_vector_initialize_copy( VALUE copy, VALUE orig ) {
   FVStruct *fv_copy;
   FVStruct *fv_orig;
@@ -114,7 +74,7 @@ VALUE foo_vector_magnitude( VALUE self ) {
 }
 
 /*
- * Defined bindings, needs to be called when class is loaded
+ * Create bindings, should be called as part of library initialisation
  *
 */
 

@@ -1,7 +1,7 @@
 // ext/foo/foo.c
 
 #include <ruby.h>
-#include "foo_vector.h"
+#include "foo_vector_ruby.h"
 
 // To hold the module object
 VALUE Foo = Qnil;
