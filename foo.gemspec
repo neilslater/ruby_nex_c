@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["slobo.777@gmail.com"]
   gem.description   = %q{Native extension starter gem combining Ruby and C}
   gem.summary       = %q{Native extension in C}
-  gem.homepage      = "https://github.com/neilslater/ruby_nexc"
+  gem.homepage      = "https://github.com/neilslater/ruby_nex_c"
   gem.license       = "MIT"
 
   gem.add_development_dependency "rspec", ">= 2.13.0"

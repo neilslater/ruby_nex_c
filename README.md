@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/neilslater/ruby_nex_c.png?branch=master)](http://travis-ci.org/neilslater/ruby_nex_c)
 
-Example of gem that combines Ruby and C native extension.
+Example of gem that combines Ruby with a C native extension.
 
 ## Installation
 
@@ -26,8 +26,7 @@ This gem is a do-nothing skeleton, built starting from
 
 and then continued by adding support for native extensions in C.
 
-Its purpose is to be a reference or starting point
-for other gems with both Ruby and C code.
+Its purpose is to be a reference or starting point for other gems with both Ruby and C code.
 
 ## Contributing
 
