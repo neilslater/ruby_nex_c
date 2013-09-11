@@ -3,13 +3,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // This is the implementation of a small "C only" library, which has been made compatible with
-// binding to Ruby, but has no interaction with Ruby, and does not use functions from ruby.h
+// binding to Ruby. Note there are still some dependencies on ruby.h for xmalloc and xfree, which
+// would need changing if the library was to be used elsewhere (probably easiest is to #define them
+// and remove the #include <ruby.h>)
 //
 // It is not a full implementation of 3D vector class, it's just a stub of one to use
 // as a template for any similar "C struct == Ruby class" projects.
 //
 
 #include "foo_vector_lib.h"
+#include <ruby.h>
 
 /*
  * Routines to create and destroy structs. If a struct contains
@@ -21,32 +24,22 @@
 
 FVStruct *create_fv_struct() {
   FVStruct *fv;
-  fv = malloc (sizeof(FVStruct));
-  if ( fv != NULL ) {
-    fv->x = 0.0;
-    fv->y = 0.0;
-    fv->z = 0.0;
-  }
-  // What to do if this is NULL?
+  fv = xmalloc( sizeof(FVStruct) );
+  fv->x = 0.0;
+  fv->y = 0.0;
+  fv->z = 0.0;
   return fv;
 }
 
 void destroy_fv_struct( FVStruct *fv ) {
-  if ( fv == NULL ) {
-    return;
-  }
-  // Should we use "xfree" here? It isn't clear how to do this without ruby.h
-  free( fv );
+  xfree( fv );
   return;
 }
 
 // Note this isn't called from initialize_copy, it's for internal copies
 FVStruct *copy_fv_struct( FVStruct *orig ) {
   FVStruct *fv = create_fv_struct();
-  if ( fv != NULL ) {
-    memcpy( fv, orig, sizeof(FVStruct) );
-  }
-  // What to do if this is NULL?
+  memcpy( fv, orig, sizeof(FVStruct) );
   return fv;
 }
 
