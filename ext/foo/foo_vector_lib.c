@@ -1,10 +1,13 @@
 // ext/foo/foo_vector_lib.c
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // This is the implementation of a small "C only" library, which has been made compatible with
 // binding to Ruby, but has no interaction with Ruby, and does not use functions from ruby.h
-
-// This is not a full implementation of 3D vector class, it's just the bare outline of one to use
+//
+// It is not a full implementation of 3D vector class, it's just a stub of one to use
 // as a template for any similar "C struct == Ruby class" projects.
+//
 
 #include "foo_vector_lib.h"
 

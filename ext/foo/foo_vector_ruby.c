@@ -1,14 +1,15 @@
 // ext/foo/foo_vector_ruby.c
 
-// This is the header for Ruby bindings that connect a "native" library to Ruby object-oriented
-// framework.
-
-// This is just the bare outline of a library, and not supposed to be complete.
+////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// This is the implementation of Ruby bindings that connect a "native" library based on a C
+// struct to the Ruby API
+//
 
 #include "foo_vector_ruby.h"
 
 /*
- * Generic Ruby integration
+ * Generic Ruby integration - helper functions working with FVStruct pointers
  *
 */
 
@@ -39,7 +40,7 @@ void assert_value_wraps_fv( VALUE obj ) {
 }
 
 /*
- * C implementations of methods for binding with Ruby
+ * Functions that can be bound to a Ruby class
  *
 */
 
