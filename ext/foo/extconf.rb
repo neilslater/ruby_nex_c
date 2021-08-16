@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ext/foo/extconf.rb
 require 'mkmf'
-create_makefile( 'foo/foo' )
+create_makefile('foo/foo')
