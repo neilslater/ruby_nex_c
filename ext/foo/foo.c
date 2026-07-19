@@ -2,8 +2,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//  This is the main library definition. The function Init_foo() is Ruby's entry point when
-//  require-ing the compiled library.
+// This is the extension entry point. Ruby calls Init_foo() when requiring the compiled library.
 //
 
 #include <ruby.h>

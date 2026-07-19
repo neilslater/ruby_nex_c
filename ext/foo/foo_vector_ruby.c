@@ -18,7 +18,7 @@ static size_t foo_vector_memsize(const void *ptr) {
   return ptr == NULL ? 0 : sizeof(FVStruct);
 }
 
-// Describes the wrapped C struct to Ruby's garbage collector.
+// Describes how Ruby manages the wrapped C struct.
 static const rb_data_type_t foo_vector_type = {
   .wrap_struct_name = "Foo::Vector",
   .function = {
@@ -29,8 +29,7 @@ static const rb_data_type_t foo_vector_type = {
   .flags = RUBY_TYPED_FREE_IMMEDIATELY,
 };
 
-// This method *must* take no params, and return a ready-to-use
-// Ruby object, with memory already allocated if any needed.
+// Allocates a Ruby object and its zero-initialised C struct.
 static VALUE foo_vector_alloc(VALUE klass) {
   FVStruct *fv;
 
@@ -49,7 +48,7 @@ static FVStruct *get_fv_struct(VALUE obj) {
  *
 */
 
-// Native extensions version of initialize
+// Implements the Ruby initialize method.
 static VALUE foo_vector_initialize(VALUE self, VALUE init_x, VALUE init_y, VALUE init_z) {
   FVStruct *fv = get_fv_struct(self);
 
@@ -60,7 +59,7 @@ static VALUE foo_vector_initialize(VALUE self, VALUE init_x, VALUE init_y, VALUE
   return self;
 }
 
-// Special initialize to support "clone"
+// Copies the wrapped C struct for dup and clone.
 static VALUE foo_vector_initialize_copy(VALUE copy, VALUE orig) {
   FVStruct *fv_copy;
   FVStruct *fv_orig;
@@ -76,7 +75,7 @@ static VALUE foo_vector_initialize_copy(VALUE copy, VALUE orig) {
   return copy;
 }
 
-// Example of using a "native" struct method
+// Calls the C vector function and returns a Ruby number.
 static VALUE foo_vector_magnitude(VALUE self) {
   const FVStruct *fv = get_fv_struct(self);
 
@@ -84,7 +83,7 @@ static VALUE foo_vector_magnitude(VALUE self) {
 }
 
 /*
- * Create bindings, should be called as part of library initialisation
+ * Defines Foo::Vector and binds its Ruby methods
  *
 */
 
