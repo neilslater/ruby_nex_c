@@ -8,3 +8,4 @@ gemspec
 gem 'rake', '>= 1.9.1'
 gem 'rake-compiler', '>= 0.8.3'
 gem 'rspec', '>= 2.13.0'
+gem 'rubocop', '~> 1.75'

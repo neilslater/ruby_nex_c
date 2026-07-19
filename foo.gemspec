@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/neilslater/ruby_nex_c'
   gem.license       = 'MIT'
 
-  gem.required_ruby_version = '>= 2.7.1'
+  gem.required_ruby_version = '>= 3.3'
 
   gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }

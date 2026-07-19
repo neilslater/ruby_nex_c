@@ -1,6 +1,6 @@
 # Foo
 
-[![Build Status](https://travis-ci.org/neilslater/ruby_nex_c.png?branch=master)](http://travis-ci.org/neilslater/ruby_nex_c)
+[![CI](https://github.com/neilslater/ruby_nex_c/actions/workflows/ci.yml/badge.svg)](https://github.com/neilslater/ruby_nex_c/actions/workflows/ci.yml)
 
 Example of gem that combines Ruby with a C native extension.
 
