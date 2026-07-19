@@ -4,47 +4,57 @@ require 'foo'
 
 describe Foo do
   describe '#ruby_test' do
-    it 'should return 42' do
-      expect(Foo.ruby_test).to be 42
+    it 'returns 42' do
+      expect(described_class.ruby_test).to be 42
     end
   end
+
   describe '#ext_test' do
-    it 'should return 8093' do
-      expect(Foo.ext_test).to be 8093
-    end
-  end
-end
-
-describe Foo::Vector do
-  describe 'class method' do
-    describe '#new' do
-      it 'should create a new valid Foo::Vector object' do
-        expect(Foo::Vector.new(0, 0, 0)).to be_a Foo::Vector
-      end
-
-      it 'should reject non-numbers when instantiating' do
-        expect { Foo::Vector.new('x', 0.0, 0.0) }.to raise_error TypeError
-        expect { Foo::Vector.new(0, {}, 0.0) }.to raise_error TypeError
-        expect { Foo::Vector.new(0, 0, []) }.to raise_error TypeError
-      end
+    it 'returns 8093' do
+      expect(described_class.ext_test).to be 8093
     end
   end
 
-  describe 'instance method' do
-    let(:fv) { Foo::Vector.new(1.0, 2.0, 3.0) }
+  describe Foo::Vector do
+    subject(:vector) { described_class.new(1.0, 2.0, 3.0) }
+
+    describe '.new' do
+      it 'creates a valid vector' do
+        expect(described_class.new(0, 0, 0)).to be_a described_class
+      end
+
+      it 'rejects a non-number for x' do
+        expect { described_class.new('x', 0.0, 0.0) }.to raise_error TypeError
+      end
+
+      it 'rejects a non-number for y' do
+        expect { described_class.new(0, {}, 0.0) }.to raise_error TypeError
+      end
+
+      it 'rejects a non-number for z' do
+        expect { described_class.new(0, 0, []) }.to raise_error TypeError
+      end
+    end
 
     describe '#magnitude' do
-      it 'should return length of a vector' do
-        expect(fv.magnitude).to be_within(1e-9).of Math.sqrt(14.0)
+      it 'returns the length of a vector' do
+        expect(vector.magnitude).to be_within(1e-9).of Math.sqrt(14.0)
       end
     end
 
     describe '#clone' do
-      it 'should create a copy of a vector, including C-struct data' do
-        fv_copy = fv.clone
-        expect(fv_copy).to be_a Foo::Vector
-        expect(fv_copy.object_id).to_not eql fv.object_id
-        expect(fv_copy.magnitude).to be_within(1e-9).of Math.sqrt(14.0)
+      subject(:copy) { vector.clone }
+
+      it 'creates another vector' do
+        expect(copy).to be_a described_class
+      end
+
+      it 'creates a distinct object' do
+        expect(copy.object_id).not_to eql vector.object_id
+      end
+
+      it 'copies the C-struct data' do
+        expect(copy.magnitude).to be_within(1e-9).of Math.sqrt(14.0)
       end
     end
   end

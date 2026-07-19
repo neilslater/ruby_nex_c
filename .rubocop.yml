@@ -1,12 +1,16 @@
+plugins:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
-  TargetRubyVersion: 2.7.1
+  TargetRubyVersion: 3.3
   NewCops: enable
 
 Layout/LineLength:
   Max: 120
   
 Metrics/BlockLength:
-  IgnoredMethods:
+  AllowedMethods:
     - context
     - describe
     - shared_examples

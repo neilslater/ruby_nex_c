@@ -14,15 +14,20 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/neilslater/ruby_nex_c'
   gem.license       = 'MIT'
 
-  gem.required_ruby_version = '>= 2.7.1'
+  gem.required_ruby_version = '>= 3.3'
 
-  gem.add_development_dependency 'rake', '>= 1.9.1'
-  gem.add_development_dependency 'rake-compiler', '>= 0.8.3'
-  gem.add_development_dependency 'rspec', '>= 2.13.0'
-
-  gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
-  gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.extensions    = gem.files.grep(%r{/extconf\.rb$})
+  gem.files = Dir[
+    'CHANGELOG.md',
+    'LICENSE.txt',
+    'README.md',
+    'ext/**/*.{c,h,rb}',
+    'lib/**/*.rb'
+  ]
+  gem.extensions    = ['ext/foo/extconf.rb']
   gem.require_paths = ['lib']
+
+  gem.metadata['source_code_uri'] = gem.homepage
+  gem.metadata['bug_tracker_uri'] = "#{gem.homepage}/issues"
+  gem.metadata['changelog_uri'] = "#{gem.homepage}/blob/main/CHANGELOG.md"
+  gem.metadata['rubygems_mfa_required'] = 'true'
 end
