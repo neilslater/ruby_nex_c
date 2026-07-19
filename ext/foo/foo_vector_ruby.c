@@ -13,10 +13,12 @@
  *
 */
 
+// Reports the memory used by the wrapped C struct.
 static size_t foo_vector_memsize(const void *ptr) {
   return ptr == NULL ? 0 : sizeof(FVStruct);
 }
 
+// Describes the wrapped C struct to Ruby's garbage collector.
 static const rb_data_type_t foo_vector_type = {
   .wrap_struct_name = "Foo::Vector",
   .function = {
