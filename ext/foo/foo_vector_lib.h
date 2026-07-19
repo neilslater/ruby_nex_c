@@ -9,22 +9,15 @@
 #ifndef FOO_VECTOR_LIB_H
 #define FOO_VECTOR_LIB_H
 
-#include <stdlib.h>
-#include <string.h>
-
-// For sqrt
 #include <math.h>
 
 // This is the struct that the rest of the code wraps
-typedef struct _fv {
-    double x;
-    double y;
-    double z;
-  } FVStruct;
+typedef struct {
+  double x;
+  double y;
+  double z;
+} FVStruct;
 
-FVStruct *create_fv_struct();
-void destroy_fv_struct( FVStruct *fv );
-FVStruct *copy_fv_struct( FVStruct *orig );
-double fv_magnitude( FVStruct *fv );
+double fv_magnitude(const FVStruct *fv);
 
-#endif
+#endif // FOO_VECTOR_LIB_H
