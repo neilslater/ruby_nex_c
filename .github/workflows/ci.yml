@@ -51,6 +51,9 @@ jobs:
           ruby-version: '4.0'
           bundler-cache: true
 
+      - name: Compile native extension
+        run: bundle exec rake compile
+
       - name: Run coverage
         run: COVERAGE=true bundle exec rspec
 
