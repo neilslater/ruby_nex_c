@@ -13,10 +13,13 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
         ruby-version:
           - '3.3'
           - '3.4'
@@ -38,8 +41,82 @@ jobs:
       - name: Run specs
         run: bundle exec rspec
 
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+
+      - name: Compile native extension
+        run: bundle exec rake compile
+
+      - name: Run coverage
+        run: COVERAGE=true bundle exec rspec
+
       - name: Run RuboCop
         run: bundle exec rubocop
 
+      - name: Audit dependencies
+        run: bundle exec bundle-audit check --update
+
+      - name: Check API documentation
+        run: bundle exec yard stats --list-undoc
+
       - name: Build gem package
-        run: gem build foo.gemspec
+        run: bundle exec rake build
+
+  native-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        check:
+          - lint
+          - coverage
+          - sanitize
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install C coverage tool
+        if: matrix.check == 'coverage'
+        run: sudo apt-get update && sudo apt-get install -y gcovr
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+
+      - name: Show native compiler
+        run: |
+          ruby -rrbconfig -e 'puts RbConfig::CONFIG.fetch("CC")'
+          "$(ruby -rrbconfig -e 'print RbConfig::CONFIG.fetch("CC").split.first')" --version
+
+      - name: Run native quality check
+        run: bundle exec rake c:${{ matrix.check }}
+
+      - name: Add C coverage summary to job summary
+        if: matrix.check == 'coverage' && always()
+        run: |
+          if test -f coverage/c/summary.txt; then
+            cat coverage/c/summary.txt >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload C coverage report
+        if: matrix.check == 'coverage' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c-coverage
+          path: coverage/c
+          retention-days: 14
+          if-no-files-found: warn

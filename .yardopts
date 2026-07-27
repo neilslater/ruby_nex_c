@@ -1,0 +1,2 @@
+--fail-on-warning
+--exclude ext/.*[.]c$

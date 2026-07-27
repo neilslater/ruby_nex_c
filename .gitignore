@@ -5,10 +5,9 @@
 .config
 .yardoc
 .DS_Store
-Gemfile.lock
 InstalledFiles
 _yardoc
-coverage
+/coverage/
 doc/
 lib/bundler/man
 pkg
@@ -16,4 +15,8 @@ rdoc
 spec/reports
 test/tmp
 test/version_tmp
-tmp
+/tmp/
+*.o
+*.so
+*.gcda
+*.gcno
