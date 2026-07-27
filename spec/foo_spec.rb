@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'objspace'
 require 'spec_helper'
 
 describe Foo do
@@ -39,6 +40,13 @@ describe Foo do
     describe '#magnitude' do
       it 'returns the length of a vector' do
         expect(vector.magnitude).to be_within(1e-9).of Math.sqrt(14.0)
+      end
+    end
+
+    describe 'memory accounting' do
+      it 'reports the memory used by its native struct' do
+        # ObjectSpace invokes the typed-data dsize callback, covering the underlying C memory accounting.
+        expect(ObjectSpace.memsize_of(vector)).to be_positive
       end
     end
 
