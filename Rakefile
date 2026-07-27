@@ -105,8 +105,7 @@ namespace :c do
       '-S',
       'bundle',
       'exec',
-      'rake',
-      'test'
+      'rspec'
     )
   end
 end

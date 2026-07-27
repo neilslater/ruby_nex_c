@@ -10,14 +10,14 @@ case native_mode
 when 'release'
   # Retain the optimisation and portability flags selected by the current Ruby.
 when 'lint'
-  $CFLAGS << ' -std=c11 -O0 -g'
+  $CFLAGS << ' -std=gnu2x -O0 -g'
   $CFLAGS << ' -Wall -Wextra -Wpedantic -Wformat=2 -Werror'
 
   cc = RbConfig::CONFIG.fetch('CC')
   host_os = RbConfig::CONFIG.fetch('host_os')
   if cc.match?(/clang/) || host_os.match?(/darwin/)
-    # Ruby 4 headers use C23 attributes, ANYARGS declarations, and no-op parameters under C11.
-    $CFLAGS << ' -Wno-c23-extensions -Wno-strict-prototypes -Wno-unused-parameter'
+    # Ruby headers retain ANYARGS declarations and no-op parameters.
+    $CFLAGS << ' -Wno-strict-prototypes -Wno-unused-parameter'
   end
 when 'coverage'
   $CFLAGS << ' -O0 -g --coverage'
