@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if ENV['COVERAGE'] == 'true'
+if ENV['COVERAGE'] == 'true' && !ENV['FOO_DISABLE_SIMPLECOV']
   require 'simplecov'
 
   SimpleCov.start do
