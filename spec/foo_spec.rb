@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'foo'
+require 'spec_helper'
 
 describe Foo do
   describe '#ruby_test' do
