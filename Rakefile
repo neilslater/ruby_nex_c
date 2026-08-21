@@ -59,54 +59,50 @@ gcc_compiler = lambda do |task_name|
   cc
 end
 
-# rubocop:disable Metrics/BlockLength
-namespace :c do
-  desc 'Compile the native extension with strict C warnings'
-  task :lint do
-    rebuild_and_test_native.call('lint', test: false)
-  end
-
-  desc 'Measure C coverage using the full Ruby test suite'
-  task :coverage do
-    gcc_compiler.call('c:coverage')
-    abort 'c:coverage requires gcovr on PATH' unless system('gcovr', '--version', out: File::NULL)
-
-    rebuild_and_test_native.call('coverage')
-
-    FileUtils.mkdir_p('coverage/c')
-    sh(
-      'gcovr',
-      '--root', '.',
-      '--filter', 'ext/foo/',
-      '--html-details', 'coverage/c/index.html',
-      '--xml', 'coverage/c/cobertura.xml',
-      '--txt', 'coverage/c/summary.txt',
-      '--print-summary'
-    )
-  end
-
-  desc 'Run the Ruby tests with ASan and UBSan'
-  task :sanitize do
-    abort 'c:sanitize requires Linux' unless RUBY_PLATFORM.match?(/linux/)
-
-    cc = gcc_compiler.call('c:sanitize')
-    libasan = Open3.capture2e(*Shellwords.split(cc), '-print-file-name=libasan.so').first.strip
-    abort 'c:sanitize could not locate the GCC ASan runtime' if libasan.empty? || libasan == 'libasan.so'
-
-    rebuild_and_test_native.call('sanitize', test: false)
-
-    sh(
-      {
-        'ASAN_OPTIONS' => 'detect_leaks=0',
-        'FOO_DISABLE_SIMPLECOV' => '1',
-        'LD_PRELOAD' => libasan
-      },
-      RbConfig.ruby,
-      '-S',
-      'bundle',
-      'exec',
-      'rspec'
-    )
-  end
+desc 'Compile the native extension with strict C warnings'
+task 'c:lint' do
+  rebuild_and_test_native.call('lint', test: false)
 end
-# rubocop:enable Metrics/BlockLength
+
+desc 'Measure C coverage using the full Ruby test suite'
+task 'c:coverage' do
+  gcc_compiler.call('c:coverage')
+  abort 'c:coverage requires gcovr on PATH' unless system('gcovr', '--version', out: File::NULL)
+
+  rebuild_and_test_native.call('coverage')
+
+  FileUtils.mkdir_p('coverage/c')
+  sh(
+    'gcovr',
+    '--root', '.',
+    '--filter', 'ext/foo/',
+    '--html-details', 'coverage/c/index.html',
+    '--xml', 'coverage/c/cobertura.xml',
+    '--txt', 'coverage/c/summary.txt',
+    '--print-summary'
+  )
+end
+
+desc 'Run the Ruby tests with ASan and UBSan'
+task 'c:sanitize' do
+  abort 'c:sanitize requires Linux' unless RUBY_PLATFORM.match?(/linux/)
+
+  cc = gcc_compiler.call('c:sanitize')
+  libasan = Open3.capture2e(*Shellwords.split(cc), '-print-file-name=libasan.so').first.strip
+  abort 'c:sanitize could not locate the GCC ASan runtime' if libasan.empty? || libasan == 'libasan.so'
+
+  rebuild_and_test_native.call('sanitize', test: false)
+
+  sh(
+    {
+      'ASAN_OPTIONS' => 'detect_leaks=0',
+      'FOO_DISABLE_SIMPLECOV' => '1',
+      'LD_PRELOAD' => libasan
+    },
+    RbConfig.ruby,
+    '-S',
+    'bundle',
+    'exec',
+    'rspec'
+  )
+end

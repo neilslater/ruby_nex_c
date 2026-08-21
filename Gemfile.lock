@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/neilslater/ncs_rubocop_conf.git
+  revision: 985a4b5820edbe05fb1f21d39e700398709d4dbc
+  tag: v0.2.0
+  specs:
+    ncs_rubocop_conf (0.2.0)
+      rubocop (~> 1.89.0, >= 1.89.0)
+      rubocop-rake (~> 0.7.0, >= 0.7.1)
+      rubocop-rspec (~> 3.10.0, >= 3.10.2)
+
 PATH
   remote: .
   specs:
@@ -19,7 +29,7 @@ GEM
       prism (>= 1.3.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.21.1)
+    json (2.21.2)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -61,7 +71,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.7)
-    rubocop (1.88.2)
+    rubocop (1.89.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -109,12 +119,10 @@ DEPENDENCIES
   bundler-audit (~> 0.9)
   foo!
   irb (~> 1.15)
+  ncs_rubocop_conf!
   rake (~> 13.0)
   rake-compiler (~> 1.3)
   rspec (~> 3.13)
-  rubocop (~> 1.75)
-  rubocop-rake (~> 0.7)
-  rubocop-rspec (~> 3.0)
   simplecov (~> 0.22)
   yard (~> 0.9)
 

@@ -30,7 +30,8 @@ Its purpose is to be a reference or starting point for other gems with both Ruby
 
 ## Supported Ruby versions
 
-This gem supports all Ruby release series that have not reached official end-of-life, as listed in Ruby's
+This gem requires Ruby 3.3 or newer and supports maintained MRI release series,
+as listed in Ruby's
 [maintenance-branches schedule](https://www.ruby-lang.org/en/downloads/branches/).
 
 ## Contributing
