@@ -16,5 +16,11 @@
 */
 
 double fv_magnitude(const FVStruct *fv) {
-  return sqrt(fv->x * fv->x + fv->y * fv->y + fv->z * fv->z);
+  // Preserve NaN propagation even when another coordinate is infinite.
+  if (isnan(fv->x) || isnan(fv->y) || isnan(fv->z)) {
+    return NAN;
+  }
+
+  // hypot avoids intermediate square overflow/underflow; the result may still overflow.
+  return hypot(hypot(fv->x, fv->y), fv->z);
 }

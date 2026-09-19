@@ -51,10 +51,17 @@ static FVStruct *get_fv_struct(VALUE obj) {
 // Implements the Ruby initialize method.
 static VALUE foo_vector_initialize(VALUE self, VALUE init_x, VALUE init_y, VALUE init_z) {
   FVStruct *fv = get_fv_struct(self);
+  FVStruct initialized;
 
-  fv->x = NUM2DBL(init_x);
-  fv->y = NUM2DBL(init_y);
-  fv->z = NUM2DBL(init_z);
+  rb_check_frozen(self);
+  // Conversion can raise or call Ruby code. Keep native state intact until all succeed.
+  initialized.x = NUM2DBL(init_x);
+  initialized.y = NUM2DBL(init_y);
+  initialized.z = NUM2DBL(init_z);
+
+  // A callback may freeze self; Ruby's frozen flag does not guard C assignments.
+  rb_check_frozen(self);
+  *fv = initialized;
 
   return self;
 }
@@ -68,6 +75,8 @@ static VALUE foo_vector_initialize_copy(VALUE copy, VALUE orig) {
     return copy;
   }
 
+  // Apply Ruby's frozen/same-class rules, then validate both native layouts.
+  rb_obj_init_copy(copy, orig);
   fv_copy = get_fv_struct(copy);
   fv_orig = get_fv_struct(orig);
   *fv_copy = *fv_orig;

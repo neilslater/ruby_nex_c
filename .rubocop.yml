@@ -1,6 +1,15 @@
+inherit_mode:
+  merge:
+    - Exclude
+
 inherit_gem:
   ncs_rubocop_conf:
     - config/base.yml
     - config/rake.yml
     - config/rspec.yml
     - config/native_extension.yml
+
+# RuboCop rationale: Exclude local guidance and historical research probes from product linting.
+AllCops:
+  Exclude:
+    - 'docs/agent/**/*'
